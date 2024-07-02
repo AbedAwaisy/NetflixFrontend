@@ -21,7 +21,7 @@ spec:
           - containerPort: 3000
         env:
           - name: MOVIE_CATALOG_SERVICE
-            value: http://netflix-catalog:8080
+            value: http://netflix-catalog:8081
           - name: REDIS_URL
             value: "redis:6379"
 
