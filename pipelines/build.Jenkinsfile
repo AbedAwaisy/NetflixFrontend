@@ -1,5 +1,5 @@
 // pipelines/build.Jenkinsfile
-
+// check push trigger
 pipeline {
     agent {
         label 'general'
@@ -20,6 +20,7 @@ pipeline {
 
                     # build an image
                     docker build -t netflix-front .
+
                 '''
             }
         }
