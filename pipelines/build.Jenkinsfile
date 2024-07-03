@@ -40,6 +40,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASS')]) {
+                        env.DOCKER_USERNAME = "${DOCKER_USERNAME}"
+                        env.DOCKER_PASS = "${DOCKER_PASS}"
                         sh '''
                             docker login -u $DOCKER_USERNAME -p $DOCKER_PASS
                         '''
@@ -52,12 +54,10 @@ pipeline {
             steps {
                 script {
                     env.IMAGE_FULL_NAME = "${DOCKER_USERNAME}/${IMAGE_BASE_NAME}:${IMAGE_TAG}"
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASS')]) {
-                        sh '''
-                            docker build -t $IMAGE_FULL_NAME .
-                            docker push $IMAGE_FULL_NAME
-                        '''
-                    }
+                    sh '''
+                        docker build -t $IMAGE_FULL_NAME .
+                        docker push $IMAGE_FULL_NAME
+                    '''
                 }
             }
         }
