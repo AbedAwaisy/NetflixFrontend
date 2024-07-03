@@ -18,6 +18,21 @@ pipeline {
     }
 
     stages {
+        stage('Install yq') {
+            steps {
+                sh '''
+                    if ! command -v yq &> /dev/null
+                    then
+                        echo "yq could not be found, installing..."
+                        wget https://github.com/mikefarah/yq/releases/download/v4.6.3/yq_linux_amd64 -O /usr/local/bin/yq
+                        chmod +x /usr/local/bin/yq
+                    else
+                        echo "yq is already installed"
+                    fi
+                '''
+            }
+        }
+
         stage('Docker setup') {
             steps {
                 script {
