@@ -15,6 +15,7 @@ pipeline {
     environment {
         IMAGE_TAG = "v1.0.${BUILD_NUMBER}"
         IMAGE_BASE_NAME = 'netflix-frontend'
+        YQ_PATH = "${env.HOME}/bin/yq"
     }
 
     stages {
@@ -24,8 +25,10 @@ pipeline {
                     if ! command -v yq &> /dev/null
                     then
                         echo "yq could not be found, installing..."
-                        curl -L https://github.com/mikefarah/yq/releases/download/v4.6.3/yq_linux_amd64 -o /usr/local/bin/yq
-                        chmod +x /usr/local/bin/yq
+                        mkdir -p ${HOME}/bin
+                        curl -L https://github.com/mikefarah/yq/releases/download/v4.6.3/yq_linux_amd64 -o ${YQ_PATH}
+                        chmod +x ${YQ_PATH}
+                        export PATH=${HOME}/bin:$PATH
                     else
                         echo "yq is already installed"
                     fi
