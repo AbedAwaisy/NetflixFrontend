@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Build and deploy to Test environment') {
             steps {
-                sh 'echo trigger build & deploy pipelines... wait for completion'
+                sh 'echo trigger build deploy pipelines... wait for completion'
             }
         }
         stage('Tests after build') {
@@ -44,3 +44,4 @@ pipeline {
     }
 }
 // comment for testing test
+// test
